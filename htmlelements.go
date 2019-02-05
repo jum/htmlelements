@@ -22,7 +22,8 @@ func GetAttribute(n *html.Node, attrName string) string {
 	return ""
 }
 
-// GetElementsByClassName searches the doc
+// GetElementsByClassName searches the doc for all elements with the given
+// class name.
 func GetElementsByClassName(doc *html.Node, className string) []*html.Node {
 	var nodes []*html.Node
 	var f func(*html.Node)
