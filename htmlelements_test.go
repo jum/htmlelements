@@ -35,7 +35,7 @@ func TestElements(t *testing.T) {
 		t.Errorf("failed to find content node")
 	}
 	t.Logf("content node %#v", n)
-	paras := GetElementsByClassName(n, "parax")
+	paras := GetElementsByClassName(n, "para")
 	if len(paras) != 2 {
 		t.Errorf("did not find two paragraphs")
 	}
