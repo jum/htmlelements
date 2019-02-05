@@ -39,6 +39,23 @@ func GetElementsByClassName(doc *html.Node, className string) []*html.Node {
 	return nodes
 }
 
+// GetElementsByTagName searches the doc for all elements with the given
+// tag name.
+func GetElementsByTagName(doc *html.Node, tagName string) []*html.Node {
+	var nodes []*html.Node
+	var f func(*html.Node)
+	f = func(n *html.Node) {
+		if n.Type == html.ElementNode && n.Data == tagName {
+			nodes = append(nodes, n)
+		}
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			f(c)
+		}
+	}
+	f(doc)
+	return nodes
+}
+
 // GetElementByID searches for the HTML element with the given id.
 func GetElementByID(doc *html.Node, id string) *html.Node {
 	var node *html.Node
