@@ -83,3 +83,19 @@ func hasClass(n *html.Node, class string) bool {
 	}
 	return false
 }
+
+// InnerText retrieves all the text of all the elements concatenated.
+func InnerText(n *html.Node) (ret string) {
+	var f func(*html.Node)
+	f = func(n *html.Node) {
+		if n.Type == html.TextNode {
+			ret += n.Data
+			return
+		}
+		for c := n.FirstChild; c != nil; c = c.NextSibling {
+			f(c)
+		}
+	}
+	f(n)
+	return
+}
