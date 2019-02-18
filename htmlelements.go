@@ -9,6 +9,7 @@ import (
 	"strings"
 
 	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
 // GetAttribute searches the named attribute, returning the value or if
@@ -61,7 +62,7 @@ func GetElementByID(doc *html.Node, id string) *html.Node {
 	var node *html.Node
 	var f func(*html.Node)
 	f = func(n *html.Node) {
-		if n.Type == html.ElementNode && GetAttribute(n, "id") == id {
+		if n.Type == html.ElementNode && GetAttribute(n, atom.Id.String()) == id {
 			node = n
 			return
 		}
@@ -76,7 +77,7 @@ func GetElementByID(doc *html.Node, id string) *html.Node {
 // hasClass splits the class attribute value on a space boundary and checks
 // if the class argument appears in that list.
 func hasClass(n *html.Node, class string) bool {
-	for _, c := range strings.Split(GetAttribute(n, "class"), " ") {
+	for _, c := range strings.Split(GetAttribute(n, atom.Class.String()), " ") {
 		if c == class {
 			return true
 		}
