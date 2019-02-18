@@ -44,3 +44,22 @@ func TestElements(t *testing.T) {
 		t.Errorf("did not find two paragraphs by tag")
 	}
 }
+
+func TestAttribute(t *testing.T) {
+	doc, err := html.Parse(strings.NewReader(testDoc))
+	if err != nil {
+		t.Fatalf("failed to parse test doc: %v", err)
+	}
+	n := GetElementByID(doc, "content")
+	if n == nil {
+		t.Errorf("failed to find content node")
+	}
+	RemoveAttribute(n, "id")
+	if GetAttribute(n, "id") != "" {
+		t.Errorf("failed to remove id attribute")
+	}
+	AddAttribute(n, "id", "super")
+	if GetAttribute(n, "id") != "super" {
+		t.Errorf("failed to add id attribute")
+	}
+}

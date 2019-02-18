@@ -99,3 +99,31 @@ func InnerText(n *html.Node) (ret string) {
 	f(n)
 	return
 }
+
+// RemoveAttribute removes the named attribute.
+func RemoveAttribute(n *html.Node, attrName string) {
+	didOne := true
+	for didOne {
+		didOne = false
+		for i, a := range n.Attr {
+			if a.Key == attrName {
+				didOne = true
+				n.Attr[i] = n.Attr[len(n.Attr)-1]
+				n.Attr = n.Attr[:len(n.Attr)-1]
+				break
+			}
+		}
+	}
+}
+
+// AddAttribute adds the named attribute, if the attribute is already present,
+// the value will be appended with a blank as delimiter
+func AddAttribute(n *html.Node, attrName, value string) {
+	for i, a := range n.Attr {
+		if a.Key == attrName {
+			n.Attr[i].Val += " " + value
+			return
+		}
+	}
+	n.Attr = append(n.Attr, html.Attribute{Key: attrName, Val: value})
+}
